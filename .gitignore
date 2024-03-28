@@ -5,7 +5,8 @@ venv/
 # IDE/Editor files
 .idea/
 *.iml
-
+# Allure reports
+allure_report/
 # Other common ignores
 *.log
 *.swp
