@@ -1,0 +1,13 @@
+# Virtual environments
+venv/
+**/__pycache__/
+
+# IDE/Editor files
+.idea/
+*.iml
+
+# Other common ignores
+*.log
+*.swp
+*.pyc
+.DS_Store
