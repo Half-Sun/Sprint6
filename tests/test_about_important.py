@@ -8,16 +8,16 @@ import allure
 
 class TestImportantQuestions:
 
-    @allure.step("Parameterized test - Check the answers of important questions")
+    @allure.title("Parameterized test - Check the answers of important questions")  # Added allure.title
     @pytest.mark.parametrize(
         'question_data',
         questions_data
     )
     def test_check_answer_on_question(self, driver, question_data):
         important_questions_page = ImportantQuestionsPage(driver)
-
+        important_questions_page.go_to_site()
         allure.step("Scroll to the important questions section")
-        important_questions_page.scroll_to_question(ImportantLocators.QUESTIONS_AREA)
+        important_questions_page.scroll_to_important_questions()
 
         allure.step("Get the text of the answer")
         actual_answer = important_questions_page.get_answer_text(

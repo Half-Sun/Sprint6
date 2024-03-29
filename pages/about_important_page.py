@@ -1,16 +1,18 @@
+from locators.about_important_locators import ImportantLocators
 from pages.base_page import BasePage
-
+import allure
 
 class ImportantQuestionsPage(BasePage):
 
-    def scroll_to_question(self, locator):
-        self.driver.get('https://qa-scooter.praktikum-services.ru')
-        question_element = self.find_element_and_wait(locator)
-        self.driver.execute_script("arguments[0].scrollIntoView(true);", question_element)
-
+    @allure.title("Click on question using locator: {locator}")
     def click_on_question(self, locator):
         self.click_on_element(locator)
 
+    @allure.title("Scroll to question using locator: {locator}")
+    def scroll_to_important_questions(self):
+        self.scroll_to_element(ImportantLocators.QUESTIONS_AREA)
+
+    @allure.step("Get answer text for question {num}")
     def get_answer_text(self, locator_q, locator_a, num):
         locator_q_formatted = self.format_locators(locator_q, num)
         locator_a_formatted = self.format_locators(locator_a, num)
