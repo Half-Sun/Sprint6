@@ -1,18 +1,21 @@
 from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.support import expected_conditions
+from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.wait import WebDriverWait
 from conftest import driver
 import allure
+
 
 class BasePage:
 
     def __init__(self, driver):
         self.driver = driver
-        self.base_url = "https://qa-scooter.praktikum-services.ru"
-        self.driver.maximize_window()
 
+    @allure.step("Open main page")
     def go_to_site(self):
-        self.driver.get(self.base_url)
+        base_url = "https://qa-scooter.praktikum-services.ru"
+        self.driver.get(base_url)
+
     @allure.step("Scroll to element using locator: {locator}")
     def scroll_to_element(self, locator):
         element = WebDriverWait(self.driver, 10).until(
@@ -36,7 +39,14 @@ class BasePage:
     def get_text_from_element(self, locator):
         return self.find_element_and_wait(locator).get_attribute('innerHTML')
 
+    @allure.step("Format locator")
     def format_locators(self, locator_1, num):
         method, locator = locator_1
         locator = locator.format(num)
         return (method, locator)
+
+    @allure.step("Switch window and wait")
+    def switch_window_and_wait(self):
+        EXPECTED_REDIRECT_URL = "https://sso.passport.yandex.ru"
+        self.driver.switch_to.window(self.driver.window_handles[1])
+        WebDriverWait(self.driver, 40).until(EC.url_contains(EXPECTED_REDIRECT_URL))
